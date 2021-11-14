@@ -111,10 +111,10 @@ function menuBar() {
         .prompt(menu)
         .then(response => {
             console.log(response)
-            switch (response) {
+            switch (response.menubar) {
                 case "VIEW_DEPARTMENTS":
                     //return query
-                    db.query(`SELECT FROM * departments`, (err, row) => {
+                    db.query(`SELECT * FROM  department`, (err, row) => {
                         if (err) {
                             console.log(err);
                         }
@@ -123,7 +123,7 @@ function menuBar() {
                     break
                 case "VIEW_ROLES":
                     //return query
-                    dq.query(`SELECT FROM * roles`, (err, row) => {
+                    dq.query(`SELECT * FROM role`, (err, row) => {
                         if (err) {
                             console.log(err);
                         }
@@ -132,7 +132,7 @@ function menuBar() {
                     break
                 case "VIEW_EMPLOYEES":
                     //return query
-                    db.query(`SELECT FROM * employees`, (err, row) => {
+                    db.query(`SELECT * FROM employee`, (err, row) => {
                         if (err) {
                             console.log(err)
                         }
@@ -140,7 +140,6 @@ function menuBar() {
                     })
             }
         });
-
 };
 
 
@@ -182,4 +181,4 @@ function menuBar() {
 //         })
 // };
 
-// menuBar();
+menuBar();
