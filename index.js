@@ -22,12 +22,12 @@ const menu = [
             {
                 name: "View All Employees",
                 value: "VIEW_EMPLOYEES"
-            }
-            // "Add a Department",
-            // "Add Role",
-            // "Add Employees",
-            // "Update Employee Role",
-            // "Quit"
+            },
+            "Add a Department",
+            "Add Role",
+            "Add Employees",
+            "Update Employee Role",
+            "Quit"
         ]
     }
 ];
@@ -62,20 +62,14 @@ const addEmployee = [
     {
         type: "list",
         name: "role",
-        message: "What is employee's role?",
-        choices: ['Sales Lead',
-            'Salesperson',
-            'Lead Engineer',
-            'Software Engineer',
-            'Accountant',
-            'Legal Team Lead',
-            'Lawyer']
+        message: "What is employee's role? Choose 1 for Sales Lead, 2 for Salesperson, 3 for Lead Engineer , 4 for Software Engineer , 5 for Accountant, 6 for Legal Team Lead, 7 for Lawyer",
+        choices: ["1", "2", "3", "4", "5", "6", "7"]
     },
     {
         type: "list",
         name: "manager",
         message: "Which is employee's manager?",
-        choices: ["John Doe", "Mike Chan", "Ashley Rodriguez", "Kevin, Tupik"]
+        choices: ["1", "2", "3", "4", "5", "6"]
     }
 ];
 
@@ -84,8 +78,6 @@ const addDepartment = [{
     name: "remove",
     message: "What is department name?",
 }];
-
-
 
 const addRole = [{
     type: "input",
@@ -106,7 +98,6 @@ const addRole = [{
 ];
 
 function menuBar() {
-    console.log("console1")
     inquirer
         .prompt(menu)
         .then(response => {
@@ -118,16 +109,18 @@ function menuBar() {
                         if (err) {
                             console.log(err);
                         }
-                        console.log(cTable.getTable(row))
+                        console.log(cTable.getTable(row));
+                        return menuBar()
                     });
                     break
                 case "VIEW_ROLES":
                     //return query
-                    dq.query(`SELECT * FROM role`, (err, row) => {
+                    db.query(`SELECT * FROM role`, (err, row) => {
                         if (err) {
                             console.log(err);
                         }
-                        console.log(row)
+                        console.log(cTable.getTable(row))
+                        return menuBar()
                     });
                     break
                 case "VIEW_EMPLOYEES":
@@ -136,10 +129,12 @@ function menuBar() {
                         if (err) {
                             console.log(err)
                         }
-                        console.log(row)
+                        console.log(cTable.getTable(row))
+                        return menuBar()
                     })
             }
         });
+
 };
 
 
@@ -151,27 +146,29 @@ function menuBar() {
 // }
 
 
-// function makeEmployee() {
-//     inquirer
-//         .prompt(addEmployee)
-//         .then(response => {
-//             console.log(response)
-//         })
+function makeEmployee() {
+    console.log("console2")
+    inquirer
+        .prompt(addEmployee)
+        .then(response => {
+            console.log(response)
 
-//             // db.query("INSERT INTO employee SET ?", {
-//             //     firstName: response.firstName,
-//             //     lastName: response.lastName,
-//             //     roleId: response.role,
-//             //     managerId: response.manager
-//             // }, function(error) {
-//             //     if (error) throw error;
-//             //     console.log("Added Employee");
+            db.query("INSERT INTO employee SET ?", {
+                firstName: response.firstName,
+                lastName: response.lastName,
+                roleId: response.role,
+                managerId: response.manager
+            }, function (error) {
+                if (error) throw error;
+                console.log("Added Employee");
+                return menuBar()
 
-//             // })
+            })
 
-//         // })
-// };
-// makeEmployee()
+        })
+
+};
+makeEmployee()
 
 // function addDepartment() {
 //     inquirer
@@ -181,4 +178,4 @@ function menuBar() {
 //         })
 // };
 
-menuBar();
+// menuBar();
