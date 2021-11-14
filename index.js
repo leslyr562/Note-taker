@@ -106,6 +106,7 @@ const addRole = [{
 ];
 
 function menuBar() {
+    console.log("console1")
     inquirer
         .prompt(menu)
         .then(response => {
@@ -141,6 +142,7 @@ function menuBar() {
         });
 
 };
+
 
 // function querying() {
 //     db.promise().query("SELECT * FROM employees", (err, row) => {
