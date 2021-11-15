@@ -1,3 +1,3 @@
 DROP DATABASE IF EXISTS traker;
 CREATE DATABASE traker;
-USE traker;
+USE traker;;

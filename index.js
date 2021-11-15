@@ -1,5 +1,9 @@
 const inquirer = require('inquirer');
+<<<<<<< HEAD
 const db = require("./db/connection");
+=======
+const db = require('./db/connection');
+>>>>>>> develop
 const cTable = require('console.table');
 
 
@@ -32,6 +36,13 @@ const menu = [
             {
                 name: "Add Employees",
                 value: "ADD_EMPLOYEE"
+<<<<<<< HEAD
+=======
+            },
+            {
+                name: "Quit",
+                value: "Quit"
+>>>>>>> develop
             }
         ]
     }
@@ -150,7 +161,12 @@ function menuBar() {
                 case "ADD_EMPLOYEE":
                     //return function
                     makeEmployee();
+<<<<<<< HEAD
 
+=======
+                    case "Quit":
+                        console.log("goodbye!")
+>>>>>>> develop
             }
         });
 
