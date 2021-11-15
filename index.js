@@ -32,6 +32,10 @@ const menu = [
             {
                 name: "Add Employees",
                 value: "ADD_EMPLOYEE"
+            },
+            {
+                name: "Quit",
+                value: "Quit"
             }
         ]
     }
@@ -150,7 +154,8 @@ function menuBar() {
                 case "ADD_EMPLOYEE":
                     //return function
                     makeEmployee();
-
+                    case "Quit":
+                        console.log("goodbye!")
             }
         });
 
