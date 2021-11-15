@@ -3,8 +3,6 @@ const db = require('./db/connection');
 const cTable = require('console.table');
 
 
-let employees = [];
-
 const menu = [
     {
         type: 'list',
@@ -23,11 +21,18 @@ const menu = [
                 name: "View All Employees",
                 value: "VIEW_EMPLOYEES"
             },
-            "Add a Department",
-            "Add Role",
-            "Add Employees",
-            "Update Employee Role",
-            "Quit"
+            {
+                name: "Add a Department",
+                value: "ADD_DEPARTMENT"
+            },
+            {
+                name: "Add Role",
+                value: "ADD_ROLE"
+            },
+            {
+                name: "Add Employees",
+                value: "ADD_EMPLOYEE"
+            }
         ]
     }
 ];
@@ -69,19 +74,19 @@ const addEmployee = [
         type: "list",
         name: "manager",
         message: "Which is employee's manager?",
-        choices: ["1", "2", "3", "4", "5", "6"]
+        choices: ["0", "1", "2", "3", "4", "5", "6"]
     }
 ];
 
 const addDepartment = [{
     type: "input",
-    name: "remove",
+    name: "department",
     message: "What is department name?",
 }];
 
 const addRole = [{
     type: "input",
-    name: "addRole",
+    name: "title",
     message: "What is employee's role?"
 },
 {
@@ -92,10 +97,11 @@ const addRole = [{
 {
     type: "list",
     name: "department",
-    message: "What is the role's department number? Choose: 1 for Finance, 2 for Engineering, 3 for Legal and 4 for Sales",
-    choices: [1, 2, 3, 4]
+    message: "What is the role's department number? Choose: 1 for Sales lead, 2 for Salesperson, 3 for Lead Engineer and 4 for Software Engineer, 5 for Accountant, 6 for Legal Team Lead and 7 for Lawyer",
+    choices: ["1", "2", "3", "4", "5", "6", "7"]
 }
 ];
+
 
 function menuBar() {
     inquirer
@@ -131,20 +137,56 @@ function menuBar() {
                         }
                         console.log(cTable.getTable(row))
                         return menuBar()
-                    })
+                    });
+                    break
+                case "ADD_DEPARTMENT":
+                    //return function
+                    makeDepartment();
+                    break
+                case "ADD_ROLE":
+                    //return function
+                    makeRole();
+                    break
+                case "ADD_EMPLOYEE":
+                    //return function
+                    makeEmployee();
+
             }
         });
 
 };
 
+function makeDepartment() {
+    inquirer
+        .prompt(addDepartment)
+        .then(response => {
+            console.log(response)
+            db.query(`INSERT INTO department SET?`, {
+                name: response.department
+            }, function (error) {
+                if (error) throw error;
+                console.log(" Successfully Added Department");
+                return menuBar()
+            })
+        })
+};
 
-// function querying() {
-//     db.promise().query("SELECT * FROM employees", (err, row) => {
-//         if(err) throw err;
-//         console.log("results", row);
-//     })
-// }
-
+function makeRole() {
+    inquirer
+        .prompt(addRole)
+        .then(response => {
+            console.log(response)
+            db.query("INSERT INTO role SET ?", {
+                title: response.title,
+                salary: response.salary,
+                departmentId: response.department
+            }, function (error) {
+                if (error) throw error;
+                console.log("Successfully Added Role!");
+                return menuBar()
+            })
+        })
+};
 
 function makeEmployee() {
     console.log("console2")
@@ -153,14 +195,14 @@ function makeEmployee() {
         .then(response => {
             console.log(response)
 
-            db.query("INSERT INTO employee SET ?", {
+            db.query(`INSERT INTO employee SET ?`, {
                 firstName: response.firstName,
                 lastName: response.lastName,
                 roleId: response.role,
                 managerId: response.manager
             }, function (error) {
                 if (error) throw error;
-                console.log("Added Employee");
+                console.log("Successfully Added Employee");
                 return menuBar()
 
             })
@@ -168,14 +210,5 @@ function makeEmployee() {
         })
 
 };
-makeEmployee()
 
-// function addDepartment() {
-//     inquirer
-//         .prompt(addDepartment)
-//         .then(response => {
-//             console.log(response)
-//         })
-// };
-
-// menuBar();
+menuBar();

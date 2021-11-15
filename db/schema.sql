@@ -16,11 +16,6 @@ CREATE TABLE role (
     -- CONSTRAINT fk_department FOREIGN KEY (departmentId) REFERENCES department(id) ON DELETE SET NULL
 );
 
--- SELECT role.*, department.name
---     -> AS department_name
---     -> FROM role
---     -> LEFT JOIN department
---     -> ON role.department_id = department.id;
 
 CREATE TABLE  employee (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
