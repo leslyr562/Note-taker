@@ -25,4 +25,4 @@ The purpose of the app is to add employees, add job roles and departments.
 The following is needed to run the test: Clone repository.
 
 Here is a video of how this application works
-Video Link: https://watch.screencastify.com/v/kcIOPJs6AG4MMeMHJPyn
+Video Link: https://drive.google.com/file/d/1B_xMsanHrPvUpus7zMDEtvpeWP_MgmeT/view
